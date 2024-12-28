@@ -10,7 +10,6 @@ export default function ({
   modalOpen,
   setModalOpen,
   logout,
-  setOpenShareFaq,
 }: AccountModalProps) {
   const closeModal = useCallback(() => {
     setModalOpen(false)
@@ -28,15 +27,7 @@ export default function ({
       header="Your account"
       bodyContent={<BodyContent address={address} />}
       footerContent={
-        <Footer
-          logout={onLogout}
-          address={address}
-          closeModal={closeModal}
-          setOpenShareFaq={() => {
-            closeModal()
-            setOpenShareFaq()
-          }}
-        />
+        <Footer logout={onLogout} address={address} closeModal={closeModal} />
       }
       modalOpen={modalOpen}
       setModalOpen={setModalOpen}

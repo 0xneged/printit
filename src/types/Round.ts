@@ -1,4 +1,4 @@
-import User from 'types/User'
+import type User from 'types/User'
 
 export type Deposit = Omit<User, 'bannedFromChat'> & {
   amount: number

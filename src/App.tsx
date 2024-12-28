@@ -3,43 +3,25 @@ import { PrivyProvider } from '@privy-io/react-auth'
 import { WagmiProvider } from '@privy-io/wagmi'
 import { QueryClientProvider } from '@tanstack/react-query'
 import Header from 'components/Header'
-import HatIcon from 'components/icons/HatIcon'
-import Lazy from 'components/Lazy'
 import env from 'helpers/env'
-import useSocket from 'helpers/hooks/useSocket'
 import queryClient from 'helpers/queryClient'
 import walletConfig from 'helpers/walletConfig'
+import Main from 'pages/Main'
 import NotFound from 'pages/NotFound'
-import { lazy, useEffect } from 'preact/compat'
+import { useEffect } from 'preact/compat'
 import { ToastContainer } from 'react-toastify'
-import { Socket } from 'socket.io-client'
 import { base } from 'viem/chains'
-import { Redirect, Route, Router, Switch } from 'wouter-preact'
+import { Route, Router, Switch } from 'wouter-preact'
 import { useHashLocation } from 'wouter-preact/use-hash-location'
 
-const CoinFlipGame = lazy(() => import('./pages/CoinFlipGame'))
-
-function AppInner({ socket }: { socket: Socket }) {
+function App() {
   return (
     <>
       <Header />
       <div className="container mx-auto max-w-prose p-4 min-h-[88dvh] text-white">
         <Router hook={useHashLocation}>
           <Switch>
-            <Route
-              path="/coin-flip/:roomId?"
-              component={(params) => (
-                <Lazy>
-                  <CoinFlipGame socket={socket} {...params} />
-                </Lazy>
-              )}
-            />
-            <Route
-              path="/:roomId?"
-              component={({ params }) => (
-                <Redirect to={`/coin-flip/${params.roomId}`} />
-              )}
-            />
+            <Route path="/" component={Main} />
             <Route component={NotFound} />
           </Switch>
         </Router>
@@ -57,17 +39,6 @@ function AppInner({ socket }: { socket: Socket }) {
     </>
   )
 }
-function App() {
-  const { socket } = useSocket()
-
-  if (!socket)
-    return (
-      <div className="h-screen text-white">
-        <HatIcon centered rotateAnimation />
-      </div>
-    )
-  return <AppInner socket={socket} />
-}
 
 export default function AppWrapped() {
   useEffect(() => {
@@ -79,8 +50,8 @@ export default function AppWrapped() {
       config={{
         appearance: {
           logo: 'logo.webp',
-          accentColor: '#B66DFF',
-          landingHeader: "Let's a roll 🪙",
+          accentColor: '#ab4774',
+          landingHeader: "Let's print 📃",
           theme: 'dark',
         },
         supportedChains: [base as never],

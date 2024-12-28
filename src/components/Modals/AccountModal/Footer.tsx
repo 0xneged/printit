@@ -1,16 +1,12 @@
-import FaqIcon from 'components/icons/FaqIcon'
 import HatIcon from 'components/icons/HatIcon'
 import { AccountModalInner } from 'components/Modals/AccountModal/Props'
-import ShareRefButton from 'components/ShareRefButton'
 import { Button as FlowBiteButton } from 'flowbite-react'
 import vibrate from 'helpers/vibrate'
 import { useState } from 'preact/hooks'
 
 export default function ({
-  address,
   logout,
   closeModal,
-  setOpenShareFaq,
 }: AccountModalInner & {
   closeModal: () => void
 }) {
@@ -31,17 +27,9 @@ export default function ({
       processingSpinner: <HatIcon rotateAnimation />,
     })
 
-  const ShareButton = () => (
-    <div className="hidden flex-row gap-x-2">
-      <FaqIcon onClick={setOpenShareFaq} />
-      <ShareRefButton address={address} />
-    </div>
-  )
-
   return (
     <>
       <LogoutButton />
-      <ShareButton />
     </>
   )
 }

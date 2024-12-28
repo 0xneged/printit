@@ -1,40 +1,26 @@
-import { useEffect, useState } from 'preact/hooks'
+import dayjs from 'dayjs'
+import { useEffect, useState } from 'react'
 
-export default function (endTime?: string, updateInterval = 1000) {
-  const defaultTime = { minutes: 0, seconds: 0, milliSeconds: 0 }
-  const [time, setTime] = useState(defaultTime)
+export default function useCountDown({
+  endTime = 0,
+  step = 1,
+  format = 'HH:mm:ss',
+}: {
+  endTime?: number | undefined
+  step?: number
+  format?: string
+}) {
+  const [time, setTime] = useState(endTime)
 
   useEffect(() => {
-    if (!endTime) return
-
     const interval = setInterval(() => {
-      const now = new Date().getTime()
-      const end = new Date(endTime).getTime()
-
-      const distance = end - now
-
-      setTime({
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) || 0,
-        seconds: Math.floor((distance % (1000 * 60)) / 1000) || 0,
-        milliSeconds: Math.floor(distance % 1000) || 0,
-      })
-
-      if (distance < 0) {
-        clearInterval(interval)
-        setTime({
-          minutes: 0,
-          seconds: 0,
-          milliSeconds: 0,
-        })
-      }
-    }, updateInterval)
+      setTime((prev) => (prev > 0 ? prev - step : 0))
+    }, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [endTime, updateInterval])
+  }, [setTime, step])
 
-  if (!endTime) return defaultTime
-
-  return time
+  return { time, formatted: dayjs({ seconds: time }).format(format) }
 }

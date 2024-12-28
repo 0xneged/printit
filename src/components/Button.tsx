@@ -1,12 +1,13 @@
 import HatIcon from 'components/icons/HatIcon'
 import { PropsWithChildren } from 'preact/compat'
-import OnClick from 'types/OnClick'
+import { OnClickEvent } from 'types/OnClick'
 
-interface ButtonProps extends PropsWithChildren, OnClick {
+interface ButtonProps extends PropsWithChildren {
   disabled?: boolean
   styles?: string
   loading?: boolean
   bgHat?: boolean
+  onClick?: OnClickEvent<HTMLButtonElement>
 }
 
 const basicButtonStyles =

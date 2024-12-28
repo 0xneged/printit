@@ -10,7 +10,7 @@ export default function () {
         404
       </Link>
       <Link href="/" className="!underline">
-        Go back 🔄🎩
+        Back
       </Link>
     </div>
   )
